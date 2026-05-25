@@ -2571,14 +2571,14 @@
         </div>
         <div class="cart-footer" id="cartFooter" style="display:none;">
             <div class="cart-subtotal"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
-            <div class="cart-subtotal"><span>Shipping</span><span style="color:var(--color-accent-green);font-weight:600;">Free</span></div>
+            <div class="cart-subtotal"><span>Delivery Charge</span><span id="cartDrawerDelivery" style="color:var(--color-accent-green);font-weight:600;">Free</span></div>
             <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
             <button id="cartDrawerCheckoutBtn" class="btn btn-primary w-full" onclick="showPage('checkout'); toggleCart();">
                 Proceed to Checkout
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
             <div id="cartBulkMsg" style="display:none; color:var(--state-error); font-size:13px; margin-top:12px; font-weight:500;">Minimum order for Ready Plants is ₹50,000. Please add more items to proceed with your bulk order.</div>
-            <p class="cart-note"><span>✓</span> Free delivery over ₹999 applied</p>
+            <p class="cart-note" id="cartDeliveryNote"><span>✓</span> Free delivery for Large Plants</p>
         </div>
     </div>
 
@@ -3055,12 +3055,12 @@
                             <div id="checkoutItems">
                             </div>
                             <div class="summary-item"><span>Subtotal</span><span id="checkoutSubtotal">₹0</span></div>
-                            <div class="summary-item"><span>Shipping</span><span style="color:var(--color-accent-green);font-weight:600;">Free</span></div>
+                            <div class="summary-item"><span>Delivery Charge</span><span id="checkoutPageDelivery" style="color:var(--color-accent-green);font-weight:600;">Free</span></div>
                             <div class="summary-item"><span>Tax (GST)</span><span>₹0</span></div>
                             <div class="summary-item total"><span>Total</span><span id="checkoutFinalTotal">₹0</span></div>
                             <div style="background:rgba(95,175,109,0.1);border-radius:var(--radius-sm);padding:12px 16px;margin-top:16px;display:flex;align-items:center;gap:10px;">
                                 <span style="font-size:20px;">🌿</span>
-                                <span style="font-size:13px;color:var(--color-primary);"><strong>Free delivery</strong> applied on orders above ₹999</span>
+                                <span id="checkoutDeliveryNote" style="font-size:13px;color:var(--color-primary);"><strong>Free delivery</strong> applied for Large Plants</span>
                             </div>
                         </div>
                     </div>
@@ -6164,12 +6164,36 @@
         }
 
         function updateCartUI() {
+            const hasReadyPlants = cart.some(item => item.categorySlug === 'ready-plants');
+            const deliveryCharge = (hasReadyPlants || cart.length === 0) ? 0 : 80;
             const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const finalTotal = totalPrice + deliveryCharge;
+            
             document.getElementById('cartBadge').textContent = totalQty;
             document.getElementById('cartCountHeader').textContent = totalQty;
             document.getElementById('cartSubtotal').textContent = '₹' + totalPrice.toLocaleString();
-            document.getElementById('cartTotal').textContent = '₹' + totalPrice.toLocaleString();
+            
+            const cartDrawerDelivery = document.getElementById('cartDrawerDelivery');
+            if (cartDrawerDelivery) {
+                if (deliveryCharge === 0) {
+                    cartDrawerDelivery.textContent = 'Free';
+                    cartDrawerDelivery.style.color = 'var(--color-accent-green)';
+                } else {
+                    cartDrawerDelivery.textContent = '₹' + deliveryCharge;
+                    cartDrawerDelivery.style.color = 'inherit';
+                }
+            }
+            
+            const cartDeliveryNote = document.getElementById('cartDeliveryNote');
+            if (cartDeliveryNote) {
+                if (hasReadyPlants) {
+                    cartDeliveryNote.innerHTML = '<span>✓</span> Free delivery applied for Ready Plants';
+                } else {
+                    cartDeliveryNote.innerHTML = '<span>ℹ</span> ₹80 delivery charge for Small Plants';
+                }
+            }
+            document.getElementById('cartTotal').textContent = '₹' + finalTotal.toLocaleString();
 
             const cartItems = document.getElementById('cartItems');
             const cartEmpty = document.getElementById('cartEmpty');
@@ -6359,11 +6383,35 @@
                     </div>
                 `).join('');
             }
-            document.getElementById('checkoutSubtotal').textContent = '₹' + totalPrice.toLocaleString();
-            document.getElementById('checkoutFinalTotal').textContent = '₹' + totalPrice.toLocaleString();
-            document.getElementById('checkoutTotal').textContent = '₹' + totalPrice.toLocaleString();
-
             const hasReadyPlants = cart.some(item => item.categorySlug === 'ready-plants');
+            const deliveryCharge = (hasReadyPlants || cart.length === 0) ? 0 : 80;
+            const finalTotal = totalPrice + deliveryCharge;
+
+            document.getElementById('checkoutSubtotal').textContent = '₹' + totalPrice.toLocaleString();
+            
+            const checkoutPageDelivery = document.getElementById('checkoutPageDelivery');
+            if (checkoutPageDelivery) {
+                if (deliveryCharge === 0) {
+                    checkoutPageDelivery.textContent = 'Free';
+                    checkoutPageDelivery.style.color = 'var(--color-accent-green)';
+                } else {
+                    checkoutPageDelivery.textContent = '₹' + deliveryCharge;
+                    checkoutPageDelivery.style.color = 'inherit';
+                }
+            }
+
+            const checkoutDeliveryNote = document.getElementById('checkoutDeliveryNote');
+            if (checkoutDeliveryNote) {
+                if (hasReadyPlants) {
+                    checkoutDeliveryNote.innerHTML = '<strong>Free delivery</strong> applied for Large Plants';
+                } else {
+                    checkoutDeliveryNote.innerHTML = '<strong>₹80 delivery charge</strong> applied for Small Plants';
+                }
+            }
+
+            document.getElementById('checkoutFinalTotal').textContent = '₹' + finalTotal.toLocaleString();
+            document.getElementById('checkoutTotal').textContent = '₹' + finalTotal.toLocaleString();
+
             const checkoutPlaceOrderBtn = document.getElementById('checkoutPlaceOrderBtn');
             const checkoutBulkMsg = document.getElementById('checkoutBulkMsg');
             
