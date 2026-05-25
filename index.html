@@ -2573,10 +2573,11 @@
             <div class="cart-subtotal"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
             <div class="cart-subtotal"><span>Shipping</span><span style="color:var(--color-accent-green);font-weight:600;">Free</span></div>
             <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
-            <button class="btn btn-primary w-full" onclick="showPage('checkout'); toggleCart();">
+            <button id="cartDrawerCheckoutBtn" class="btn btn-primary w-full" onclick="showPage('checkout'); toggleCart();">
                 Proceed to Checkout
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
+            <div id="cartBulkMsg" style="display:none; color:var(--state-error); font-size:13px; margin-top:12px; font-weight:500;">Minimum order for Ready Plants is ₹50,000. Please add more items to proceed with your bulk order.</div>
             <p class="cart-note"><span>✓</span> Free delivery over ₹999 applied</p>
         </div>
     </div>
@@ -2644,41 +2645,23 @@
                     <h2>Curated Collections</h2>
                     <p>From statement-making Monsteras to air-purifying Peace Lilies, find the perfect green companion for every space.</p>
                 </div>
-                <div class="categories-grid">
+                <div class="categories-grid" style="grid-template-columns: repeat(2, 1fr);">
                     <div class="category-card reveal reveal-delay-1" onclick="showPage('shop')">
                         <div class="img-container" style="width:100%;height:100%;">
-                            <img src="https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=600&h=800&fit=crop&auto=format&q=80" alt="Indoor" onload="this.parentElement.classList.add('loaded')" onerror="this.style.opacity='1'; this.src='https://placehold.co/600x800/F0EDE6/1A3A2B?text=Indoor+Plants'">
+                            <img src="https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=600&h=800&fit=crop&auto=format&q=80" alt="Ready Plants" onload="this.parentElement.classList.add('loaded')" onerror="this.style.opacity='1'; this.src='https://placehold.co/600x800/F0EDE6/1A3A2B?text=Ready+Plants'">
                         </div>
                         <div class="category-overlay">
-                            <h3>Indoor Plants</h3>
-                            <span>124 Products</span>
+                            <h3>Ready Plants (Large)</h3>
+                            <span>78 Products (Bulk Only)</span>
                         </div>
                     </div>
                     <div class="category-card reveal reveal-delay-2" onclick="showPage('shop')">
                         <div class="img-container" style="width:100%;height:100%;">
-                            <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=800&fit=crop&auto=format&q=80" alt="Outdoor" onload="this.parentElement.classList.add('loaded')" onerror="this.style.opacity='1'; this.src='https://placehold.co/600x800/F0EDE6/1A3A2B?text=Outdoor+Garden'">
+                            <img src="https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=600&h=800&fit=crop&auto=format&q=80" alt="Small Plants" onload="this.parentElement.classList.add('loaded')" onerror="this.style.opacity='1'; this.src='https://placehold.co/600x800/F0EDE6/1A3A2B?text=Small+Plants'">
                         </div>
                         <div class="category-overlay">
-                            <h3>Outdoor Garden</h3>
-                            <span>86 Products</span>
-                        </div>
-                    </div>
-                    <div class="category-card reveal reveal-delay-3" onclick="showPage('shop')">
-                        <div class="img-container" style="width:100%;height:100%;">
-                            <img src="https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=600&h=800&fit=crop&auto=format&q=80" alt="Spices & Vines" onload="this.parentElement.classList.add('loaded')" onerror="this.style.opacity='1'; this.src='https://placehold.co/600x800/F0EDE6/1A3A2B?text=Spices+%26+Vines'">
-                        </div>
-                        <div class="category-overlay">
-                            <h3>Spices & Vines</h3>
-                            <span>52 Products</span>
-                        </div>
-                    </div>
-                    <div class="category-card reveal reveal-delay-4" onclick="showPage('shop')">
-                        <div class="img-container" style="width:100%;height:100%;">
-                            <img src="https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=600&h=800&fit=crop&auto=format&q=80" alt="Rare" onload="this.parentElement.classList.add('loaded')" onerror="this.style.opacity='1'; this.src='https://placehold.co/600x800/F0EDE6/1A3A2B?text=Rare+%26+Exotic'">
-                        </div>
-                        <div class="category-overlay">
-                            <h3>Rare & Exotic</h3>
-                            <span>28 Products</span>
+                            <h3>Small/Medium Plants</h3>
+                            <span>14 Products</span>
                         </div>
                     </div>
                 </div>
@@ -2760,12 +2743,9 @@
                     <div class="sidebar-block">
                         <div class="sidebar-title">Categories</div>
                         <ul class="filter-list" id="categoryFilters">
-                            <li class="filter-item active" data-filter="all" onclick="filterProducts('all', this)">All Plants <span class="filter-count">248</span></li>
-                            <li class="filter-item" data-filter="indoor" onclick="filterProducts('indoor', this)">Indoor <span class="filter-count">124</span></li>
-                            <li class="filter-item" data-filter="outdoor" onclick="filterProducts('outdoor', this)">Outdoor <span class="filter-count">86</span></li>
-                            <li class="filter-item" data-filter="spices" onclick="filterProducts('spices', this)">Spices & Vines <span class="filter-count">52</span></li>
-                            <li class="filter-item" data-filter="rare" onclick="filterProducts('rare', this)">Rare & Exotic <span class="filter-count">28</span></li>
-                            <li class="filter-item" data-filter="air" onclick="filterProducts('air', this)">Air Purifying <span class="filter-count">42</span></li>
+                            <li class="filter-item active" data-filter="all" onclick="filterProducts('all', this)">All Fruit Plants <span class="filter-count">92</span></li>
+                            <li class="filter-item" data-filter="ready-plants" onclick="filterProducts('ready-plants', this)">Ready Plants <span class="filter-count">78</span></li>
+                            <li class="filter-item" data-filter="small-plants" onclick="filterProducts('small-plants', this)">Small Plants <span class="filter-count">14</span></li>
                         </ul>
                     </div>
                     <div class="sidebar-block">
@@ -3063,10 +3043,11 @@
                                 <span class="payment-label">Credit / Debit Card</span>
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-lg w-full" onclick="placeOrder()">
+                        <button id="checkoutPlaceOrderBtn" class="btn btn-primary btn-lg w-full" onclick="placeOrder()">
                             Place Order — <span id="checkoutTotal">₹0</span>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </button>
+                        <div id="checkoutBulkMsg" style="display:none; color:var(--state-error); font-size:14px; margin-top:16px; font-weight:500;">Minimum order for Ready Plants is ₹50,000. Please add more items to proceed with your bulk order.</div>
                     </div>
                     <div class="order-summary reveal reveal-delay-1">
                         <div class="summary-card">
@@ -3562,150 +3543,2398 @@
         // ==================== PRODUCT DATA ====================
         const products = [
             {
-                id: 0,
-                name: "Monstera Deliciosa",
-                category: "Indoor Plants",
-                categorySlug: "indoor",
-                price: 1299,
-                oldPrice: 1899,
-                rating: 4.9,
-                reviews: 128,
-                badge: "bestseller",
-                badgeText: "Bestseller",
-                image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&h=800&fit=crop&auto=format&q=80",
-                description: "The iconic Swiss Cheese Plant, loved for its dramatic split leaves and easy-going nature. Our nursery-grown Monsteras are acclimated to indoor conditions and come in premium ceramic pots.",
-                sizes: ["Small", "Medium", "Large"],
-                pots: ["Classic White", "Terracotta", "Woven Basket"],
-                stock: 12,
-                care: [
-                    "<strong>Light:</strong> Place in bright, indirect sunlight. An east-facing window is ideal.",
-                    "<strong>Water:</strong> Water thoroughly when the top 1-2 inches of soil feel dry. Reduce in winter.",
-                    "<strong>Humidity:</strong> Prefers 60%+ humidity. Mist occasionally or use a pebble tray.",
-                    "<strong>Fertilizer:</strong> Feed with balanced liquid fertilizer every 2 weeks during growing season (March-September).",
-                    "<strong>Pruning:</strong> Remove yellowing leaves at the base to redirect energy to new growth."
-                ]
+                        "id": 0,
+                        "name": "Rambhutan ready plant",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 3500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Rambhutan ready plant, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
             },
             {
-                id: 1,
-                name: "Peace Lily",
-                category: "Air Purifying",
-                categorySlug: "air",
-                price: 849,
-                oldPrice: null,
-                rating: 4.8,
-                reviews: 96,
-                badge: "new",
-                badgeText: "New",
-                image: "https://images.unsplash.com/photo-1593691509543-c55ce32eabe1?w=800&h=800&fit=crop&auto=format&q=80",
-                description: "Elegant white blooms and deep green leaves make the Peace Lily a timeless favorite. NASA-certified air purifier that removes toxins like formaldehyde and benzene. Thrives in low light and tells you when it's thirsty with a gentle droop.",
-                sizes: ["Small", "Medium", "Large"],
-                pots: ["Classic White", "Terracotta", "Woven Basket"],
-                stock: 24,
-                care: [
-                    "<strong>Light:</strong> Low to bright indirect light. Avoid direct afternoon sun.",
-                    "<strong>Water:</strong> Keep soil consistently moist but not soggy. Droops when thirsty.",
-                    "<strong>Humidity:</strong> Average household humidity is fine. Mist leaves occasionally.",
-                    "<strong>Fertilizer:</strong> Feed monthly with balanced fertilizer during spring and summer.",
-                    "<strong>Pruning:</strong> Remove spent blooms at the base to encourage new flowering."
-                ]
+                        "id": 1,
+                        "name": "Mangosteen",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 3500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Mangosteen, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
             },
             {
-                id: 2,
-                name: "Snake Plant Laurentii",
-                category: "Low Maintenance",
-                categorySlug: "indoor",
-                price: 649,
-                oldPrice: 899,
-                rating: 4.7,
-                reviews: 84,
-                badge: "sale",
-                badgeText: "Sale",
-                image: "https://images.unsplash.com/photo-1509423355108-14d975ce4d0f?w=800&h=800&fit=crop&auto=format&q=80",
-                description: "The ultimate survivor. Snake plants thrive on neglect, making them perfect for beginners or frequent travelers. Architectural upright leaves with golden edges add a modern sculptural element to any room. Releases oxygen at night.",
-                sizes: ["Small", "Medium", "Large"],
-                pots: ["Classic White", "Terracotta", "Woven Basket"],
-                stock: 18,
-                care: [
-                    "<strong>Light:</strong> Tolerates any light from low to bright indirect. Very adaptable.",
-                    "<strong>Water:</strong> Water every 2-3 weeks. Let soil dry completely between waterings.",
-                    "<strong>Humidity:</strong> No special requirements. Thrives in dry air.",
-                    "<strong>Fertilizer:</strong> Feed sparingly — once in spring and once in summer is enough.",
-                    "<strong>Pruning:</strong> Simply remove any leaves that turn yellow or brown at the base."
-                ]
+                        "id": 2,
+                        "name": "Red mango",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Red mango, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
             },
             {
-                id: 3,
-                name: "Fiddle Leaf Fig",
-                category: "Statement",
-                categorySlug: "indoor",
-                price: 1599,
-                oldPrice: 2299,
-                rating: 4.6,
-                reviews: 72,
-                badge: "sale",
-                badgeText: "Sale",
-                image: "https://images.unsplash.com/photo-1512428813834-c702c7702b78?w=800&h=800&fit=crop&auto=format&q=80",
-                description: "The interior design darling. Large, violin-shaped leaves create dramatic impact in any space. Our nursery-grown Fiddles are pre-acclimated and come with a care guarantee. The statement piece your living room has been waiting for.",
-                sizes: ["Small", "Medium", "Large"],
-                pots: ["Classic White", "Terracotta", "Woven Basket"],
-                stock: 8,
-                care: [
-                    "<strong>Light:</strong> Bright, filtered light. Rotate weekly for even growth.",
-                    "<strong>Water:</strong> Water when top inch of soil is dry. Consistency is key.",
-                    "<strong>Humidity:</strong> Prefers 60%+ humidity. Keep away from AC vents.",
-                    "<strong>Fertilizer:</strong> Feed with NPK 3-1-2 fertilizer every 2 weeks in growing season.",
-                    "<strong>Pruning:</strong> Pinch off new growth tips to encourage branching and bushier form."
-                ]
+                        "id": 3,
+                        "name": "Kulumb mango",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Kulumb mango, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
             },
             {
-                id: 4,
-                name: "Golden Pothos",
-                category: "Indoor Plants",
-                categorySlug: "indoor",
-                price: 449,
-                oldPrice: null,
-                rating: 4.8,
-                reviews: 156,
-                badge: "stock",
-                badgeText: "In Stock",
-                image: "https://images.unsplash.com/photo-1459156212016-c812468e2115?w=800&h=800&fit=crop&auto=format&q=80",
-                description: "The perfect trailing plant for shelves and hanging planters. Incredibly forgiving and grows rapidly. Heart-shaped leaves with golden variegation brighten any corner. Excellent air purifier and propagates easily in water.",
-                sizes: ["Small", "Medium"],
-                pots: ["Classic White", "Terracotta", "Woven Basket"],
-                stock: 45,
-                care: [
-                    "<strong>Light:</strong> Low to bright indirect. More light = more variegation.",
-                    "<strong>Water:</strong> Water when soil feels dry. Very forgiving of missed waterings.",
-                    "<strong>Humidity:</strong> Average household humidity. Mist occasionally for lush growth.",
-                    "<strong>Fertilizer:</strong> Feed monthly during growing season with balanced liquid fertilizer.",
-                    "<strong>Pruning:</strong> Trim long vines to encourage bushier growth. Root cuttings in water."
-                ]
+                        "id": 4,
+                        "name": "Kalapady mango",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Kalapady mango, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
             },
             {
-                id: 5,
-                name: "Rubber Plant",
-                category: "Indoor Plants",
-                categorySlug: "indoor",
-                price: 999,
-                oldPrice: 1299,
-                rating: 4.7,
-                reviews: 64,
-                badge: null,
-                badgeText: null,
-                image: "https://images.unsplash.com/photo-1598880940371-c756e015fea1?w=800&h=800&fit=crop&auto=format&q=80",
-                description: "Glossy, dark burgundy leaves make the Rubber Plant a sophisticated choice. Native to Southeast Asia, it grows into an impressive indoor tree with proper care. The deep colors add moody elegance to modern interiors.",
-                sizes: ["Small", "Medium", "Large"],
-                pots: ["Classic White", "Terracotta", "Woven Basket"],
-                stock: 15,
-                care: [
-                    "<strong>Light:</strong> Bright indirect light. Some morning sun is beneficial.",
-                    "<strong>Water:</strong> Water when top inch dries. Wipe leaves to keep them glossy.",
-                    "<strong>Humidity:</strong> Prefers higher humidity. Mist regularly or use a humidifier.",
-                    "<strong>Fertilizer:</strong> Feed every 2 weeks in spring/summer with balanced fertilizer.",
-                    "<strong>Pruning:</strong> Prune top growth to control height and encourage branching."
-                ]
+                        "id": 5,
+                        "name": "Banana Chicku",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Banana Chicku, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 6,
+                        "name": "Kalapathy chicku",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Kalapathy chicku, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 7,
+                        "name": "Thai king sapota",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Thai king sapota, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 8,
+                        "name": "Israyel orange qumquat",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Israyel orange qumquat, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 9,
+                        "name": "Seedless lemon",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Seedless lemon, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 10,
+                        "name": "Starfruit",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Starfruit, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 11,
+                        "name": "Bear apple",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Bear apple, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 12,
+                        "name": "Jamoon black",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1600,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Jamoon black, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 13,
+                        "name": "Abiue ready 6ft",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Abiue ready 6ft, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 14,
+                        "name": "Abiue ready plant (Big size, thick stem, bushy)",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 16000,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Abiue ready plant (Big size, thick stem, bushy), acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 15,
+                        "name": "Hog plum sweet amte fruiting",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1600,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Hog plum sweet amte fruiting, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 16,
+                        "name": "Bush orange fruiting",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Bush orange fruiting, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 17,
+                        "name": "Varegated bush orange fruiting",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Varegated bush orange fruiting, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 18,
+                        "name": "Thai king black jamoon",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Thai king black jamoon, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 19,
+                        "name": "Market lemon",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Market lemon, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 20,
+                        "name": "Thaiwan pink guava",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1600,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Thaiwan pink guava, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 21,
+                        "name": "Arka kiran guava",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1600,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Arka kiran guava, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 22,
+                        "name": "Red diamond guava seedless",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Red diamond guava seedless, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 23,
+                        "name": "Thai 7 guava",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1600,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Thai 7 guava, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 24,
+                        "name": "Strawberry guava",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Strawberry guava, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 25,
+                        "name": "J33 jack ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown J33 jack ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 26,
+                        "name": "Deang suriya jack",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Deang suriya jack, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 27,
+                        "name": "Eviarc world\u2019s sweetest jack ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Eviarc world\u2019s sweetest jack ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 28,
+                        "name": "Water apple Thailand red",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1600,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Water apple Thailand red, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 29,
+                        "name": "Rambhutan rongrein",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Rambhutan rongrein, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 30,
+                        "name": "Rio grand cherry",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Rio grand cherry, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 31,
+                        "name": "Mannilla tennis cherry",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Mannilla tennis cherry, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 32,
+                        "name": "Mangosteen fruiting",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 18000,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Mangosteen fruiting, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 33,
+                        "name": "Jaboticaba fruiting size",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 6500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Jaboticaba fruiting size, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 34,
+                        "name": "Jaboticaba Red hybrid drum fruiting size",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 18000,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Jaboticaba Red hybrid drum fruiting size, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 35,
+                        "name": "4 kg mango ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown 4 kg mango ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 36,
+                        "name": "American palmer mango",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown American palmer mango, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 37,
+                        "name": "Miyazaki mango ready plant",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Miyazaki mango ready plant, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 38,
+                        "name": "Katimon mango ready plant",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Katimon mango ready plant, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 39,
+                        "name": "Alupack ready plant",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Alupack ready plant, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 40,
+                        "name": "Miracle fruit ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Miracle fruit ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 41,
+                        "name": "Pulasan ready plant",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 6500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Pulasan ready plant, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 42,
+                        "name": "Apoos mango ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Apoos mango ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 43,
+                        "name": "Mallika mango ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Mallika mango ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 44,
+                        "name": "R2E2 red mango ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown R2E2 red mango ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 45,
+                        "name": "White jamoon ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown White jamoon ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 46,
+                        "name": "Barbados cherry ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Barbados cherry ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 47,
+                        "name": "Sweet lubi ready plant",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Sweet lubi ready plant, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 48,
+                        "name": "Lubi ready plant",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Lubi ready plant, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 49,
+                        "name": "Milk fruit fruiting size",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 6500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Milk fruit fruiting size, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 50,
+                        "name": "Longon ready plant fruiting size",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 6500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Longon ready plant fruiting size, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 51,
+                        "name": "Santhol fruiting",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Santhol fruiting, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 52,
+                        "name": "Banana sapota ready XXL size",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 3200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Banana sapota ready XXL size, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 53,
+                        "name": "Matoa ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Matoa ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 54,
+                        "name": "Matoa ready in airpot big size XXL",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 6500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Matoa ready in airpot big size XXL, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 55,
+                        "name": "Pakistan mulberry ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Pakistan mulberry ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 56,
+                        "name": "Indian mulberry ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Indian mulberry ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 57,
+                        "name": "Coconut hybrid ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1200,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Coconut hybrid ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 58,
+                        "name": "Red lemon ready Thailand",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1600,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Red lemon ready Thailand, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 59,
+                        "name": "Dragon fruit ready in drum",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 4600,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Dragon fruit ready in drum, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 60,
+                        "name": "Matoa ready plant 8ft thick stem",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 4500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Matoa ready plant 8ft thick stem, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 61,
+                        "name": "Matoa medium size 6ft",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Matoa medium size 6ft, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 62,
+                        "name": "Eviarc jack ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Eviarc jack ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 63,
+                        "name": "Jaboticaba pot fruiting size",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 6500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Jaboticaba pot fruiting size, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 64,
+                        "name": "Longon ready plant",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 6500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Longon ready plant, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 65,
+                        "name": "Kalapady ready plant",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Kalapady ready plant, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 66,
+                        "name": "Orange ready plant",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 3500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Orange ready plant, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 67,
+                        "name": "Musumbi ready plant",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 3500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Musumbi ready plant, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 68,
+                        "name": "Indian market lemon ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Indian market lemon ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 69,
+                        "name": "Seethphal ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Seethphal ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 70,
+                        "name": "Pomegranate ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 1800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Pomegranate ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 71,
+                        "name": "Seethphal golden ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 3000,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Seethphal golden ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 72,
+                        "name": "Seethaphal seedless ready",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 3500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Seethaphal seedless ready, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 73,
+                        "name": "Black jamoon extra big size thick stem",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2800,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Black jamoon extra big size thick stem, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 74,
+                        "name": "Seedless jamoon Thailand special extra big size",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 3500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Seedless jamoon Thailand special extra big size, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 75,
+                        "name": "Thai king jamoon extra big size thick stem",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 3000,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Thai king jamoon extra big size thick stem, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 76,
+                        "name": "Mangosteen fruiting size 8 feet",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 12000,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Mangosteen fruiting size 8 feet, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 77,
+                        "name": "Litchi ready plant",
+                        "category": "Ready Plants",
+                        "categorySlug": "ready-plants",
+                        "price": 2500,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Litchi ready plant, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 78,
+                        "name": "Sweet Lubi",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 850,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Sweet Lubi, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 79,
+                        "name": "Rainforest plum",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 950,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Rainforest plum, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 80,
+                        "name": "Miracle fruit",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 350,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Miracle fruit, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 81,
+                        "name": "Gramichama cherry",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 950,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Gramichama cherry, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 82,
+                        "name": "Keldeang",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 1400,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Keldeang, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 83,
+                        "name": "Olosoph",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 950,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Olosoph, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 84,
+                        "name": "Salak fruit",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 950,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Salak fruit, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 85,
+                        "name": "Alupack",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 950,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Alupack, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 86,
+                        "name": "Red Buttorfruit",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 750,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Red Buttorfruit, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 87,
+                        "name": "Sweet Bush orange",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 450,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1588612140409-5a585724bc2d?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Sweet Bush orange, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 88,
+                        "name": "Long mulberry",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 650,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1601646270634-118c7d540eb4?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Long mulberry, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 89,
+                        "name": "Brazilian mulberry",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 750,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1528659551468-b3f02e86d267?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Brazilian mulberry, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 90,
+                        "name": "Thai king Jambha",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 650,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Thai king Jambha, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
+            },
+            {
+                        "id": 91,
+                        "name": "Poochapazham",
+                        "category": "Small Plants",
+                        "categorySlug": "small-plants",
+                        "price": 450,
+                        "oldPrice": null,
+                        "rating": 4.9,
+                        "reviews": 24,
+                        "badge": "none",
+                        "badgeText": "",
+                        "image": "https://images.unsplash.com/photo-1596547609652-9cb5d8d87515?w=800&h=800&fit=crop&q=80",
+                        "description": "Premium nursery-grown Poochapazham, acclimated and ready to thrive in your environment.",
+                        "sizes": [
+                                    "Standard"
+                        ],
+                        "pots": [
+                                    "Nursery Pot"
+                        ],
+                        "stock": 10,
+                        "care": [
+                                    "<strong>Light:</strong> Full to partial sun preferred for fruiting plants.",
+                                    "<strong>Water:</strong> Water deeply when top soil feels dry.",
+                                    "<strong>Care:</strong> Use organic compost monthly."
+                        ]
             }
-        ];
+];
 
         const reviews = [
             { name: "Priya Sharma", initials: "PS", date: "2 weeks ago", rating: 5, text: "Absolutely stunning plant! The Monstera arrived in perfect condition — lush, healthy, and already showing new leaf growth. The packaging was incredible, not a single speck of soil out of place. Karnataka Farms has earned a lifelong customer." },
@@ -3969,6 +6198,27 @@
                     </div>
                 `).join('');
             }
+
+            // Bulk Order Logic
+            const hasReadyPlants = cart.some(item => item.categorySlug === 'ready-plants');
+            const cartDrawerCheckoutBtn = document.getElementById('cartDrawerCheckoutBtn');
+            const cartBulkMsg = document.getElementById('cartBulkMsg');
+            
+            if (hasReadyPlants && totalPrice < 50000) {
+                if (cartDrawerCheckoutBtn) {
+                    cartDrawerCheckoutBtn.disabled = true;
+                    cartDrawerCheckoutBtn.style.opacity = '0.5';
+                    cartDrawerCheckoutBtn.style.cursor = 'not-allowed';
+                }
+                if (cartBulkMsg) cartBulkMsg.style.display = 'block';
+            } else {
+                if (cartDrawerCheckoutBtn) {
+                    cartDrawerCheckoutBtn.disabled = false;
+                    cartDrawerCheckoutBtn.style.opacity = '1';
+                    cartDrawerCheckoutBtn.style.cursor = 'pointer';
+                }
+                if (cartBulkMsg) cartBulkMsg.style.display = 'none';
+            }
             const badge = document.getElementById('cartBadge');
             badge.classList.add('pulse');
             setTimeout(() => badge.classList.remove('pulse'), 400);
@@ -4110,6 +6360,26 @@
             document.getElementById('checkoutSubtotal').textContent = '₹' + totalPrice.toLocaleString();
             document.getElementById('checkoutFinalTotal').textContent = '₹' + totalPrice.toLocaleString();
             document.getElementById('checkoutTotal').textContent = '₹' + totalPrice.toLocaleString();
+
+            const hasReadyPlants = cart.some(item => item.categorySlug === 'ready-plants');
+            const checkoutPlaceOrderBtn = document.getElementById('checkoutPlaceOrderBtn');
+            const checkoutBulkMsg = document.getElementById('checkoutBulkMsg');
+            
+            if (hasReadyPlants && totalPrice < 50000) {
+                if (checkoutPlaceOrderBtn) {
+                    checkoutPlaceOrderBtn.disabled = true;
+                    checkoutPlaceOrderBtn.style.opacity = '0.5';
+                    checkoutPlaceOrderBtn.style.cursor = 'not-allowed';
+                }
+                if (checkoutBulkMsg) checkoutBulkMsg.style.display = 'block';
+            } else {
+                if (checkoutPlaceOrderBtn) {
+                    checkoutPlaceOrderBtn.disabled = false;
+                    checkoutPlaceOrderBtn.style.opacity = '1';
+                    checkoutPlaceOrderBtn.style.cursor = 'pointer';
+                }
+                if (checkoutBulkMsg) checkoutBulkMsg.style.display = 'none';
+            }
         }
 
         function updateCheckoutQty(id, size, pot, change) {
@@ -4130,6 +6400,14 @@
                 showToast('Your cart is empty!', 'error');
                 return;
             }
+            
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const hasReadyPlants = cart.some(item => item.categorySlug === 'ready-plants');
+            if (hasReadyPlants && totalPrice < 50000) {
+                showToast('Minimum order for Ready Plants is ₹50,000.', 'error');
+                return;
+            }
+            
             const orderId = 'ORD-' + Math.floor(Math.random()*100000);
             const totalStr = document.getElementById('checkoutFinalTotal').textContent.replace('₹','').replace(/,/g, '');
             const total = parseInt(totalStr) || 0;
