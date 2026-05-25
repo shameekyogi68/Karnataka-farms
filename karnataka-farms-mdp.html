@@ -4462,11 +4462,16 @@
             const orderId = 'ORD-' + Math.floor(Math.random()*100000);
             const totalStr = document.getElementById('checkoutFinalTotal').textContent.replace('₹','').replace(/,/g, '');
             const total = parseInt(totalStr) || 0;
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const deliveryCharge = 0; // Or calculate if needed
             
             db.orders.push({ id: orderId, date: new Date().toISOString(), total: total });
             localStorage.setItem('kf_orders', JSON.stringify(db.orders));
             
+            let message = `Hello! I would like to place an order (Order ID: ${orderId}):\n\n*Order Details:*\n`;
             cart.forEach(item => {
+                message += `🌿 ${item.qty}x ${item.name} (${item.size}, ${item.pot}) - ₹${(item.price * item.qty).toLocaleString()}\n`;
+                
                 db.userPlants.push({
                     id: 'pl-' + Math.random().toString(36).substr(2,9),
                     name: item.name, image: item.image,
@@ -4475,11 +4480,19 @@
             });
             localStorage.setItem('kf_garden', JSON.stringify(db.userPlants));
             
+            message += `\n*Summary:*\nSubtotal: ₹${totalPrice.toLocaleString()}\nDelivery: Free\n*Total: ₹${total.toLocaleString()}*\n\nPlease let me know how to proceed with the payment and shipping!`;
+
+            const whatsappUrl = `https://wa.me/917760674510?text=${encodeURIComponent(message)}`;
+            
             db.points += total;
             localStorage.setItem('kf_points', db.points);
 
             cart = []; saveCart(); updateCartUI();
-            showToast(`Order ${orderId} Placed! View your new plants in My Garden.`, 'success');
+            
+            // Redirect to WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            showToast(`Redirecting to WhatsApp to complete your order ${orderId}...`, 'success');
             setTimeout(() => showPage('garden'), 2000);
         }
 

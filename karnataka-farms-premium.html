@@ -3486,7 +3486,27 @@
                 showToast('Your cart is empty!', 'error');
                 return;
             }
-            showToast('Order placed successfully! 🌿 Your plants will arrive in 2-3 business days.', 'success');
+            
+            const orderId = 'ORD-' + Math.floor(Math.random()*100000);
+            const totalStr = document.getElementById('checkoutFinalTotal').textContent.replace('₹','').replace(/,/g, '');
+            const total = parseInt(totalStr) || 0;
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const deliveryCharge = 0; // Premium might have free delivery always, or calculate if needed
+
+            let message = `Hello! I would like to place an order (Order ID: ${orderId}):\n\n*Order Details:*\n`;
+            cart.forEach(item => {
+                message += `🌿 ${item.qty}x ${item.name} (${item.size}, ${item.pot}) - ₹${(item.price * item.qty).toLocaleString()}\n`;
+            });
+            
+            message += `\n*Summary:*\nSubtotal: ₹${totalPrice.toLocaleString()}\nDelivery: Free\n*Total: ₹${total.toLocaleString()}*\n\nPlease let me know how to proceed with the payment and shipping!`;
+
+            const whatsappUrl = `https://wa.me/917760674510?text=${encodeURIComponent(message)}`;
+
+            showToast(`Redirecting to WhatsApp to complete your order ${orderId}...`, 'success');
+            
+            // Redirect to WhatsApp
+            window.open(whatsappUrl, '_blank');
+
             cart = [];
             saveCart();
             updateCartUI();
