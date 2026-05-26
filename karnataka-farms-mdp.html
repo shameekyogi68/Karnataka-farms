@@ -2239,16 +2239,70 @@
             .review-average { border-right: none; border-bottom: 1px solid var(--border-light); padding-right: 0; padding-bottom: 20px; }
         }
         @media (max-width: 640px) {
-            .header-inner { padding: 0 20px; }
+            body { padding-bottom: 65px; } /* Space for bottom nav */
+            .header { padding: 10px 0; }
+            .header-inner { padding: 0 16px; display: flex; justify-content: space-between; align-items: center; }
+            .brand-name { font-size: 16px; }
+            .brand-tagline { display: none; }
+            .brand-logo { width: 28px !important; height: 28px !important; font-size: 14px !important; }
+            .icon-btn { width: 32px; height: 32px; font-size: 14px; }
+            .header-actions { gap: 8px; }
             .nav-links { display: none; }
-            .mobile-menu-btn { display: flex; }
-            .hero { padding: 60px 20px; min-height: auto; }
-            .hero-content h1 { font-size: 40px; }
-            .section { padding: 60px 20px; }
-            .categories-grid, .products-grid { grid-template-columns: 1fr; }
-            .features-grid { grid-template-columns: 1fr; }
+            .mobile-menu-btn { display: none; } /* Replaced by bottom nav */
+            .hero { padding: 40px 16px; min-height: auto; }
+            .hero-content h1 { font-size: 32px; }
+            .section { padding: 40px 16px; }
+            .newsletter { padding: 40px 16px; }
+            .shop-hero { padding: 40px 16px 20px; }
+            
+            /* Horizontal Scroll Categories */
+            .categories-grid, .categories-two-cols { 
+                display: flex; 
+                flex-wrap: nowrap; 
+                overflow-x: auto; 
+                scroll-snap-type: x mandatory; 
+                gap: 16px; 
+                padding-bottom: 10px;
+                -webkit-overflow-scrolling: touch;
+                margin: 0 -16px;
+                padding: 0 16px 16px 16px;
+            }
+            .categories-grid::-webkit-scrollbar, .categories-two-cols::-webkit-scrollbar { display: none; }
+            .category-card { 
+                flex: 0 0 calc(70% - 16px); 
+                scroll-snap-align: start; 
+                height: 140px; 
+            }
+            .category-card h3 { font-size: 18px; }
+            
+            /* 2-Column Product Grid */
+            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .card { border-radius: 12px; }
+            .img-container { padding-bottom: 100%; /* 1:1 aspect ratio */ }
+            .product-info { padding: 12px 8px; }
+            .product-category { font-size: 10px; margin-bottom: 4px; }
+            .product-title { font-size: 13px; line-height: 1.3; margin-bottom: 6px; }
+            .product-price { font-size: 14px; }
+            .product-actions { top: 8px; right: 8px; gap: 4px; }
+            .action-btn { width: 28px; height: 28px; font-size: 14px; }
+            .quick-add-btn { 
+                display: block; 
+                width: 100%; 
+                margin-top: 8px; 
+                padding: 6px 0; 
+                font-size: 12px; 
+                border-radius: 6px; 
+                border: 1px solid var(--color-primary); 
+                color: var(--color-primary); 
+                background: transparent; 
+                font-weight: 600;
+                cursor: pointer;
+            }
+            .quick-add-btn:active { background: var(--color-primary); color: #fff; }
+
+            .features-grid { grid-template-columns: 1fr; gap: 20px; }
             .footer-inner { grid-template-columns: 1fr; }
-            .cart-drawer { width: 100%; }
+            .cart-drawer { width: 100%; padding: 20px 16px; }
             .hero-floating-card { display: none; }
             .newsletter-form { flex-direction: column; }
             .detail-actions { flex-direction: column; }
@@ -2257,6 +2311,64 @@
             .shop-header { flex-direction: column; gap: 12px; align-items: flex-start; }
             .form-row { grid-template-columns: 1fr; }
             .footer-bottom { flex-direction: column; text-align: center; }
+            .footer { padding: 40px 16px 80px; } /* Extra padding for nav */
+            .zip-banner { flex-direction: column; padding: 12px; gap: 8px; font-size: 11px; }
+            .zip-banner button { align-self: center; }
+        }
+
+        /* Mobile Bottom Nav */
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-light);
+            z-index: 99;
+            padding-bottom: env(safe-area-inset-bottom); /* For iPhone notch */
+        }
+        .nav-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 60px;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            flex: 1;
+            font-size: 10px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-item.active { color: var(--color-primary); }
+        .nav-icon { font-size: 20px; line-height: 1; }
+        .nav-cart-badge {
+            position: absolute;
+            top: -4px;
+            right: 25%;
+            background: #e74c3c;
+            color: #fff;
+            font-size: 10px;
+            font-weight: bold;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
+        }
+        @media (max-width: 640px) {
+            .mobile-bottom-nav { display: block; }
         }
 
         /* Utility */
@@ -3447,6 +3559,29 @@
         </div>
     </footer>
 
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <div class="nav-items">
+            <a href="#" class="nav-item active" onclick="showPage('home'); updateBottomNav(this); return false;">
+                <span class="nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showPage('shop'); updateBottomNav(this); return false;">
+                <span class="nav-icon">🌱</span>
+                <span>Shop</span>
+            </a>
+            <a href="#" class="nav-item" onclick="toggleSearch(); return false;">
+                <span class="nav-icon">🔍</span>
+                <span>Search</span>
+            </a>
+            <a href="#" class="nav-item" style="position:relative;" onclick="toggleCart(); return false;">
+                <span class="nav-icon">🛒</span>
+                <span>Cart</span>
+                <span class="nav-cart-badge" id="bottomNavCartCount" style="display:none;">0</span>
+            </a>
+        </div>
+    </nav>
+
     <script>
         // ==================== PRODUCT DATA ====================
         const products = [
@@ -3695,6 +3830,14 @@
             if (pageName === 'checkout') {
                 updateCheckoutUI();
             }
+            closeMobileMenu();
+        }
+
+        function updateBottomNav(clickedElement) {
+            document.querySelectorAll('.mobile-bottom-nav .nav-item').forEach(el => el.classList.remove('active'));
+            if (clickedElement) {
+                clickedElement.classList.add('active');
+            }
         }
 
         function filterCategoryFromFooter(slug) {
@@ -3814,6 +3957,22 @@
             addToCart(cartItem);
         }
 
+        function quickAddToCart(productId) {
+            const p = products.find(prod => prod.id === productId);
+            if (!p) return;
+            const item = {
+                id: p.id,
+                name: p.name,
+                price: p.price,
+                image: p.image,
+                categorySlug: p.categorySlug,
+                size: p.sizes ? p.sizes[0] : 'Standard',
+                pot: p.pots ? p.pots[0] : 'Nursery Pot',
+                qty: 1
+            };
+            addToCart(item);
+        }
+
         function addToCart(item) {
             const existing = cart.find(c => c.id === item.id && c.size === item.size && c.pot === item.pot);
             if (existing) {
@@ -3859,6 +4018,11 @@
 
             document.getElementById('cartBadge').textContent = totalQty;
             document.getElementById('cartCountHeader').textContent = totalQty;
+            const bottomBadge = document.getElementById('bottomNavCartCount');
+            if (bottomBadge) {
+                bottomBadge.textContent = totalQty;
+                bottomBadge.style.display = totalQty > 0 ? 'flex' : 'none';
+            }
             document.getElementById('cartSubtotal').textContent = '₹' + totalPrice.toLocaleString();
             document.getElementById('cartTotal').textContent = '₹' + totalPrice.toLocaleString();
 
@@ -3930,6 +4094,7 @@
                             </div>
                             <div class="product-rating">★ ${p.rating}</div>
                         </div>
+                        <button class="quick-add-btn" onclick="event.stopPropagation(); quickAddToCart(${p.id})">ADD +</button>
                     </div>
                 </div>
             `).join('');
@@ -3959,6 +4124,7 @@
                             </div>
                             <div class="product-rating">★ ${p.rating}</div>
                         </div>
+                        <button class="quick-add-btn" onclick="event.stopPropagation(); quickAddToCart(${p.id})">ADD +</button>
                     </div>
                 </div>
             `).join('');
@@ -4004,6 +4170,7 @@
                             </div>
                             <div class="product-rating">★ ${p.rating}</div>
                         </div>
+                        <button class="quick-add-btn" onclick="event.stopPropagation(); quickAddToCart(${p.id})">ADD +</button>
                     </div>
                 </div>
             `).join('');
