@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kf-v4-order-rules';
+const CACHE_NAME = 'kf-v6-cart-sheet';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

@@ -703,6 +703,27 @@ function updateCheckoutSummary() {
     }
 }
 
+function closeCartDrawer() {
+    const overlay = document.getElementById('cartOverlay');
+    const drawer = document.getElementById('cartDrawer');
+    if (overlay && drawer) {
+        overlay.classList.remove('open');
+        drawer.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+
+function proceedToCheckout() {
+    const { cart } = appStore.getState();
+    const { canCheckout, readyMinimumRemaining } = getOrderRules(cart);
+    if (!canCheckout) {
+        showToast(`Ready Plants need ₹50,000 minimum. Add ₹${readyMinimumRemaining.toLocaleString('en-IN')} more.`, 'error');
+        return;
+    }
+    closeCartDrawer();
+    showPage('checkout');
+}
+
 function selectPayment(el) {
     document.querySelectorAll('.payment-option').forEach(p => p.classList.remove('active'));
     el.classList.add('active');
@@ -828,9 +849,13 @@ function toggleCart() {
     if (overlay && drawer) {
         const isOpen = overlay.classList.contains('open');
         if (!isOpen) updateCartUI();
-        overlay.classList.toggle('open');
-        drawer.classList.toggle('open');
-        document.body.style.overflow = isOpen ? '' : 'hidden';
+        if (isOpen) {
+            closeCartDrawer();
+        } else {
+            overlay.classList.add('open');
+            drawer.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
     }
 }
 

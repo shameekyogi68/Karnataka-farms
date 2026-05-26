@@ -3502,7 +3502,7 @@
         @media (max-width: 640px) {
             :root {
                 --mobile-edge: 14px;
-                --mobile-bottom-nav-height: calc(64px + env(safe-area-inset-bottom));
+                --mobile-bottom-nav-height: calc(66px + env(safe-area-inset-bottom));
             }
 
             html,
@@ -3738,6 +3738,56 @@
 
             .cart-drawer {
                 max-width: 100%;
+                bottom: var(--mobile-bottom-nav-height) !important;
+                height: calc(100dvh - var(--mobile-bottom-nav-height) - 12px) !important;
+                max-height: calc(100dvh - var(--mobile-bottom-nav-height) - 12px) !important;
+                border-radius: 20px 20px 0 0 !important;
+            }
+
+            .cart-header {
+                padding: 16px var(--mobile-edge) !important;
+                flex: 0 0 auto;
+            }
+
+            .cart-body {
+                min-height: 0;
+                padding: 14px var(--mobile-edge) !important;
+            }
+
+            .cart-item {
+                gap: 12px;
+                align-items: flex-start;
+                padding: 12px 0;
+            }
+
+            .cart-item-img-wrap,
+            .cart-item img {
+                width: 70px !important;
+                height: 70px !important;
+                flex: 0 0 70px;
+            }
+
+            .cart-item-info h4 {
+                white-space: normal;
+                line-height: 1.25;
+            }
+
+            .cart-item-qty {
+                gap: 6px;
+                flex-wrap: wrap;
+            }
+
+            .cart-footer {
+                flex: 0 0 auto;
+                position: relative !important;
+                bottom: auto !important;
+                padding: 16px var(--mobile-edge) calc(18px + env(safe-area-inset-bottom)) !important;
+                margin-bottom: 0;
+                background: var(--bg-surface) !important;
+            }
+
+            .cart-footer .btn {
+                min-height: 48px;
             }
         }
 
@@ -3762,4 +3812,4 @@
             }
         }
 
-        /* Cache bust: 20260526-mobile-fit-2 */
+        /* Cache bust: 20260526-cart-sheet-2 */
