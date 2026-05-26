@@ -894,9 +894,14 @@
             position: relative;
             border-radius: var(--radius-lg);
             overflow: hidden;
-            aspect-ratio: 3/4;
+            height: 380px;
             cursor: pointer;
             transition: var(--transition-bounce);
+        }
+        @media (max-width: 768px) {
+            .category-card {
+                height: 260px;
+            }
         }
         .category-card:hover { transform: translateY(-4px); }
         .category-card img {
