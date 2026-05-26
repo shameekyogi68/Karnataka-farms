@@ -890,6 +890,9 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 24px;
         }
+        .categories-two-cols {
+            grid-template-columns: repeat(2, 1fr);
+        }
         .category-card {
             position: relative;
             border-radius: var(--radius-lg);
@@ -1077,7 +1080,7 @@
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 40px;
             position: relative;
             z-index: 1;
@@ -2277,7 +2280,7 @@
             .section { padding: 60px 20px; }
             .newsletter { padding: 60px 20px; }
             .shop-hero { padding: 60px 20px 40px; }
-            .categories-grid, .products-grid { grid-template-columns: 1fr; }
+            .categories-grid, .products-grid, .categories-two-cols { grid-template-columns: 1fr; }
             .features-grid { grid-template-columns: 1fr; }
             .footer-inner { grid-template-columns: 1fr; }
             .cart-drawer { width: 100%; }
@@ -2650,7 +2653,7 @@
                     <h2>Curated Collections</h2>
                     <p>From statement-making Monsteras to air-purifying Peace Lilies, find the perfect green companion for every space.</p>
                 </div>
-                <div class="categories-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="categories-grid categories-two-cols">
                     <div class="category-card reveal reveal-delay-1" onclick="showPage('shop')">
                         <div class="img-container" style="width:100%;height:100%;">
                             <img src="https://images.unsplash.com/photo-1550828520-4cb496926fc9?w=600&h=800&fit=crop&auto=format&q=80" alt="Ready Plants" onload="this.parentElement.classList.add('loaded')" onerror="this.style.opacity='1'; this.src='https://placehold.co/600x800/F0EDE6/1A3A2B?text=Ready+Plants'">
@@ -2705,13 +2708,7 @@
                             <p>Specialized plant packaging ensures your green friends arrive fresh and undamaged.</p>
                         </div>
                     </div>
-                    <div class="feature-item reveal reveal-delay-2">
-                        <div class="feature-icon">🛡️</div>
-                        <div class="feature-text">
-                            <h4>30-Day Guarantee</h4>
-                            <p>Not thriving? We offer free replacements or refunds within 30 days of delivery.</p>
-                        </div>
-                    </div>
+
                     <div class="feature-item reveal reveal-delay-3">
                         <div class="feature-icon">📱</div>
                         <div class="feature-text">
@@ -2826,14 +2823,7 @@
                         <p class="detail-desc" id="productDesc">
                             The iconic Swiss Cheese Plant, loved for its dramatic split leaves and easy-going nature. Our nursery-grown Monsteras are acclimated to indoor conditions and come in premium ceramic pots.
                         </p>
-                        <div class="detail-variants" id="sizeVariants">
-                            <span class="variant-label">Select Size</span>
-                            <div class="variant-options">
-                                <button class="variant-option" onclick="selectVariant(this, 'size')">Small</button>
-                                <button class="variant-option active" onclick="selectVariant(this, 'size')">Medium</button>
-                                <button class="variant-option" onclick="selectVariant(this, 'size')">Large</button>
-                            </div>
-                        </div>
+
                         <div class="detail-variants" id="potVariants">
                             <span class="variant-label">Pot Style</span>
                             <div class="variant-options">
@@ -2858,10 +2848,6 @@
                             Check Stock on WhatsApp
                         </button>
                         <div class="detail-trust">
-                            <div class="trust-item">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                                30-Day Plant Guarantee
-                            </div>
                             <div class="trust-item">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                                 Free Shipping over ₹999
@@ -2947,10 +2933,9 @@
                 </div>
                 <div id="tab-shipping" class="tab-panel">
                     <div class="reveal">
-                        <h3 style="font-size:24px;margin-bottom:20px;">Shipping & Returns</h3>
+                        <h3 style="font-size:24px;margin-bottom:20px;">Shipping</h3>
                         <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:16px;">We ship across India using our specialized plant logistics partners. Every order is packaged in custom-designed plant boxes with moisture retention technology and shock-absorbing inserts.</p>
                         <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:16px;"><strong style="color:var(--color-primary);">Delivery Times:</strong> Metro cities: 2-3 business days. Tier 2 cities: 3-5 business days. North East & remote: 5-7 business days.</p>
-                        <p style="color:var(--text-secondary);line-height:1.8;"><strong style="color:var(--color-primary);">30-Day Plant Guarantee:</strong> If your plant arrives damaged or fails to thrive within 30 days despite following our care guide, contact us for a free replacement or full refund. No questions asked.</p>
                     </div>
                 </div>
 
@@ -3171,50 +3156,6 @@
             </div>
         </div>
 
-        <!-- PAGE: WARRANTY -->
-        <div id="page-warranty" class="page">
-            <div class="page-container" style="padding:60px 20px;background:var(--bg-base);">
-                <div class="warranty-container reveal">
-                    <h1 class="responsive-title">30-Day Plant Guarantee</h1>
-                    <p style="text-align:center;color:var(--text-secondary);margin-bottom:40px;">If your plant arrived damaged or isn't thriving, we'll replace it. No questions asked.</p>
-
-                    <div class="warranty-form">
-                        <div class="form-group">
-                            <label>Order Number *</label>
-                            <input type="text" id="warrantyOrder" placeholder="e.g. ORD-10293">
-                        </div>
-                        <div class="form-group">
-                            <label>Select Plant *</label>
-                            <select id="warrantyPlant">
-                                <option value="">Select a plant from your order...</option>
-                                <option value="Monstera Deliciosa">Monstera Deliciosa</option>
-                                <option value="Peace Lily">Peace Lily</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Issue Type *</label>
-                            <select id="warrantyIssue">
-                                <option value="damaged">Damaged on arrival (broken pot/leaves)</option>
-                                <option value="declined">Declined after a few days</option>
-                                <option value="pests">Pests detected</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Upload Photos (Required)</label>
-                            <div class="upload-area" onclick="document.getElementById('warrantyFile').click()">
-                                <div style="font-size:32px;margin-bottom:12px;">📸</div>
-                                <p style="color:var(--color-primary);font-weight:600;">Click to upload photos</p>
-                                <p style="font-size:12px;color:var(--text-secondary);margin-top:4px;">Max 5MB per photo. JPG/PNG.</p>
-                            </div>
-                            <input type="file" id="warrantyFile" style="display:none;" accept="image/*" onchange="showToast('Photo uploaded successfully', 'success')">
-                        </div>
-                        <button class="btn btn-primary w-full btn-lg" onclick="submitWarranty()">Submit Claim</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- PAGE: B2B -->
         <div id="page-b2b" class="page">
             <div class="page-container" style="padding:60px 20px;">
@@ -3397,10 +3338,6 @@
                             <p style="color:var(--text-secondary);line-height:1.6;">Our ZIP Code Gate system ensures you only buy plants suited for your specific hardiness zone. If it passes the gate, it will thrive in your climate.</p>
                         </div>
                         <div style="background:var(--bg-surface);padding:24px;border-radius:var(--radius-md);border:1px solid var(--border-light);">
-                            <h4 style="font-weight:600;margin-bottom:8px;">What if my plant arrives damaged?</h4>
-                            <p style="color:var(--text-secondary);line-height:1.6;">We offer a 30-Day Plant Guarantee. If your plant arrives damaged or dies within 30 days despite proper care, use our Warranty form to request a replacement.</p>
-                        </div>
-                        <div style="background:var(--bg-surface);padding:24px;border-radius:var(--radius-md);border:1px solid var(--border-light);">
                             <h4 style="font-weight:600;margin-bottom:8px;">Do you offer bulk/corporate orders?</h4>
                             <p style="color:var(--text-secondary);line-height:1.6;">Yes! Please use our B2B Quote form or contact us on WhatsApp for bulk pricing and office plant packages.</p>
                         </div>
@@ -3451,7 +3388,7 @@
                     <h1 class="responsive-title">Press & Media</h1>
                     <p style="font-size:18px;color:var(--text-secondary);line-height:1.8;margin-bottom:40px;">See what the world is saying about Karnataka Farms.</p>
                     <div style="background:var(--bg-surface);padding:24px;border-radius:var(--radius-md);border:1px solid var(--border-light);margin-bottom:24px;">
-                        <p style="font-style:italic;color:var(--text-secondary);margin-bottom:16px;">"Karnataka Farms has revolutionized how Indians buy plants online. Their 30-day guarantee and expert support set a new industry standard."</p>
+                        <p style="font-style:italic;color:var(--text-secondary);margin-bottom:16px;">"Karnataka Farms has revolutionized how Indians buy plants online. Their premium quality and expert support set a new industry standard."</p>
                         <h4 style="font-weight:600;">- The Better India, 2024</h4>
                     </div>
                     <div style="background:var(--bg-surface);padding:24px;border-radius:var(--radius-md);border:1px solid var(--border-light);">
@@ -3505,9 +3442,9 @@
                 <div class="footer-title">Shop</div>
                 <ul class="footer-links">
                     <li><a href="#" onclick="filterCategoryFromFooter('all'); return false;">All Plants</a></li>
-                    <li><a href="#" onclick="filterCategoryFromFooter('ready-plants'); return false;">Ready Plants (Large)</a></li>
+                    <li><a href="#" onclick="filterCategoryFromFooter('ready-plants'); return false;">Real Plants</a></li>
                     <li><a href="#" onclick="filterCategoryFromFooter('small-plants'); return false;">Small Plants</a></li>
-                    <li><a href="#" onclick="showPage('b2b'); return false;">Office Plants (B2B)</a></li>
+                    <li><a href="#" onclick="filterCategoryFromFooter('fruits'); return false;">Fruit Plants</a></li>
                 </ul>
             </div>
             <div>
@@ -6486,26 +6423,18 @@
             const paymentMethodEl = document.querySelector('.payment-option.active .payment-label');
             const paymentMethod = paymentMethodEl ? paymentMethodEl.textContent : 'Cash on Delivery';
 
-            let message = `[🛠️ TESTING]\n\n`;
-            message += `*--- CUSTOMER DETAILS (For Courier) ---*\n`;
+            let message = `*--- COURIER DETAILS ---*\n`;
             message += `Name: ${cName}\n`;
             message += `Phone: ${cPhone}\n`;
-            message += `Email: ${cEmail}\n`;
-            message += `Address: ${fullAddress}\n`;
-            message += `City/State/PIN: ${cityStatePin}\n`;
+            message += `Address: ${fullAddress}, ${cityStatePin}\n`;
             if (cLandmark) message += `Landmark: ${cLandmark}\n`;
-            message += `Delivery Method: ${deliveryMethod}\n\n`;
-            message += `----------------------------------------\n\n`;
-            
-            message += `*--- ORDER DETAILS (Order ID: ${orderId}) ---*\n`;
+            message += `\n*--- ORDER DETAILS (ID: ${orderId}) ---*\n`;
             cart.forEach(item => {
-                message += `🌿 ${item.qty}x ${item.name} (${item.size}, ${item.pot}) - ₹${(item.price * item.qty).toLocaleString()}\n`;
+                message += `• ${item.qty}x ${item.name} - ₹${(item.price * item.qty).toLocaleString()}\n`;
             });
-            
-            message += `\n*Summary:*\nSubtotal: ₹${totalPrice.toLocaleString()}\nDelivery: ${deliveryCharge === 0 ? 'Free' : '₹' + deliveryCharge}\n*Total: ₹${total.toLocaleString()}*\n\n`;
-            message += `*--- PAYMENT ---*\n`;
-            message += `Preferred Payment: ${paymentMethod}\n`;
-            message += `Please share the QR code or payment instructions to complete this order.`;
+            message += `\n*Total: ₹${total.toLocaleString()}* (incl. ₹${deliveryCharge} delivery)\n`;
+            message += `Payment: ${paymentMethod}\n`;
+            message += `\nPlease provide QR/Payment info.`;
 
             const whatsappUrl = `https://wa.me/917760674510?text=${encodeURIComponent(message)}`;
 

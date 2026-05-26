@@ -1052,7 +1052,7 @@
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 40px;
             position: relative;
             z-index: 1;
@@ -2665,13 +2665,7 @@
                             <p>Specialized plant packaging ensures your green friends arrive fresh and undamaged.</p>
                         </div>
                     </div>
-                    <div class="feature-item reveal reveal-delay-2">
-                        <div class="feature-icon">🛡️</div>
-                        <div class="feature-text">
-                            <h4>30-Day Guarantee</h4>
-                            <p>Not thriving? We offer free replacements or refunds within 30 days of delivery.</p>
-                        </div>
-                    </div>
+
                     <div class="feature-item reveal reveal-delay-3">
                         <div class="feature-icon">📱</div>
                         <div class="feature-text">
@@ -3136,49 +3130,7 @@
             </div>
         </div>
 
-        <!-- PAGE: WARRANTY -->
-        <div id="page-warranty" class="page">
-            <div class="page-container" style="padding:60px 20px;background:var(--bg-base);">
-                <div class="warranty-container reveal">
-                    <h1 class="responsive-title">30-Day Plant Guarantee</h1>
-                    <p style="text-align:center;color:var(--text-secondary);margin-bottom:40px;">If your plant arrived damaged or isn't thriving, we'll replace it. No questions asked.</p>
-                    
-                    <div class="warranty-form">
-                        <div class="form-group">
-                            <label>Order Number *</label>
-                            <input type="text" id="warrantyOrder" placeholder="e.g. ORD-10293">
-                        </div>
-                        <div class="form-group">
-                            <label>Select Plant *</label>
-                            <select id="warrantyPlant">
-                                <option value="">Select a plant from your order...</option>
-                                <option value="Monstera Deliciosa">Monstera Deliciosa</option>
-                                <option value="Peace Lily">Peace Lily</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Issue Type *</label>
-                            <select id="warrantyIssue">
-                                <option value="damaged">Damaged on arrival (broken pot/leaves)</option>
-                                <option value="declined">Declined after a few days</option>
-                                <option value="pests">Pests detected</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Upload Photos (Required)</label>
-                            <div class="upload-area" onclick="document.getElementById('warrantyFile').click()">
-                                <div style="font-size:32px;margin-bottom:12px;">📸</div>
-                                <p style="color:var(--color-primary);font-weight:600;">Click to upload photos</p>
-                                <p style="font-size:12px;color:var(--text-secondary);margin-top:4px;">Max 5MB per photo. JPG/PNG.</p>
-                            </div>
-                            <input type="file" id="warrantyFile" style="display:none;" accept="image/*" onchange="showToast('Photo uploaded mock successfully', 'success')">
-                        </div>
-                        <button class="btn btn-primary w-full btn-lg" onclick="submitWarranty()">Submit Claim</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- PAGE: B2B -->
         <div id="page-b2b" class="page">
@@ -3461,12 +3413,9 @@
                 <div class="footer-title">Shop</div>
                 <ul class="footer-links">
                     <li><a href="#" onclick="filterCategoryFromFooter('all'); return false;">All Plants</a></li>
-                    <li><a href="#" onclick="filterCategoryFromFooter('exotic'); return false;">Exotic Fruits</a></li>
-                    <li><a href="#" onclick="filterCategoryFromFooter('commercial'); return false;">Commercial Crops</a></li>
-                    <li><a href="#" onclick="filterCategoryFromFooter('spices'); return false;">Spices & Vines</a></li>
-                    <li><a href="#" onclick="filterCategoryFromFooter('fruit'); return false;">Fruit Plants</a></li>
-                    <li><a href="#" onclick="filterCategoryFromFooter('medicinal'); return false;">Medicinal Plants</a></li>
-                    <li><a href="#" onclick="showPage('b2b'); return false;">Office Plants (B2B)</a></li>
+                    <li><a href="#" onclick="filterCategoryFromFooter('ready-plants'); return false;">Real Plants</a></li>
+                    <li><a href="#" onclick="filterCategoryFromFooter('small-plants'); return false;">Small Plants</a></li>
+                    <li><a href="#" onclick="filterCategoryFromFooter('fruits'); return false;">Fruit Plants</a></li>
                 </ul>
             </div>
             <div>
