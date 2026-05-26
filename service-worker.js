@@ -1,8 +1,8 @@
-const CACHE_NAME = 'kf-v1';
+const CACHE_NAME = 'kf-v3-mobile-fit';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
-  '/styles.css',
+  '/styles-v5.css',
   '/script.js',
   '/products.json',
   '/manifest.json'
