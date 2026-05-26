@@ -432,6 +432,38 @@ function setTab(btn, tabId) {
 }
 
 // ==================== CART LOGIC ====================
+const READY_PLANTS_MINIMUM = 50000;
+const SMALL_PLANTS_DELIVERY = 80;
+
+function getOrderRules(cart) {
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    const readySubtotal = cart
+        .filter(item => item.categorySlug === 'ready-plants')
+        .reduce((sum, item) => sum + item.price * item.qty, 0);
+    const smallSubtotal = cart
+        .filter(item => item.categorySlug === 'small-plants')
+        .reduce((sum, item) => sum + item.price * item.qty, 0);
+    const hasReadyPlants = readySubtotal > 0;
+    const hasOnlySmallPlants = smallSubtotal > 0 && readySubtotal === 0;
+    const readyMinimumRemaining = Math.max(READY_PLANTS_MINIMUM - readySubtotal, 0);
+    const canCheckout = cart.length > 0 && (!hasReadyPlants || readyMinimumRemaining === 0);
+    const delivery = subtotal === 0 ? 0 : (hasOnlySmallPlants ? SMALL_PLANTS_DELIVERY : 0);
+    const deliveryFree = subtotal > 0 && delivery === 0;
+    const total = subtotal + delivery;
+
+    return {
+        subtotal,
+        readySubtotal,
+        readyMinimumRemaining,
+        hasReadyPlants,
+        hasOnlySmallPlants,
+        canCheckout,
+        delivery,
+        deliveryFree,
+        total
+    };
+}
+
 function addToCart(item) {
     const { cart } = appStore.getState();
     const existingIndex = cart.findIndex(c => c.id === item.id && c.size === item.size && c.pot === item.pot);
@@ -498,11 +530,16 @@ function toggleWishlist(productId) {
 function updateCartUI() {
     const { cart } = appStore.getState();
     const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const hasReadyPlants = cart.some(item => item.categorySlug === 'ready-plants');
-    const deliveryFree = subtotal >= 999 || hasReadyPlants;
-    const delivery = deliveryFree ? 0 : (subtotal > 0 ? 49 : 0);
-    const total = subtotal + delivery;
+    const {
+        subtotal,
+        readyMinimumRemaining,
+        hasReadyPlants,
+        hasOnlySmallPlants,
+        canCheckout,
+        delivery,
+        deliveryFree,
+        total
+    } = getOrderRules(cart);
 
     // Header badge
     const badge = document.getElementById('cartBadge');
@@ -573,15 +610,28 @@ function updateCartUI() {
     const checkoutBtn = document.getElementById('cartDrawerCheckoutBtn');
     const bulkMsg = document.getElementById('cartBulkMsg');
     if (checkoutBtn) {
-        checkoutBtn.disabled = false;
-        if (bulkMsg) bulkMsg.style.display = 'none';
+        checkoutBtn.disabled = !canCheckout;
+        checkoutBtn.style.opacity = canCheckout ? '1' : '0.55';
+        checkoutBtn.style.cursor = canCheckout ? 'pointer' : 'not-allowed';
+        if (bulkMsg) {
+            bulkMsg.style.display = canCheckout ? 'none' : 'block';
+            bulkMsg.textContent = `Minimum order for Ready Plants is ₹50,000. Add ₹${readyMinimumRemaining.toLocaleString('en-IN')} more in Ready Plants to checkout.`;
+        }
     }
 
     // Note
     const noteEl = document.getElementById('cartDeliveryNote');
-    if (noteEl) noteEl.innerHTML = deliveryFree
-        ? `<span>✓</span> Free delivery applied`
-        : `Add ₹${(999 - subtotal).toLocaleString('en-IN')} more for free delivery`;
+    if (noteEl) {
+        if (hasReadyPlants && !canCheckout) {
+            noteEl.innerHTML = `Ready Plants need ₹50,000 minimum. Add ₹${readyMinimumRemaining.toLocaleString('en-IN')} more.`;
+        } else if (deliveryFree) {
+            noteEl.innerHTML = `<span>✓</span> Free delivery for Ready Plants`;
+        } else if (hasOnlySmallPlants) {
+            noteEl.innerHTML = `Small Plants delivery charge: ₹${SMALL_PLANTS_DELIVERY}`;
+        } else {
+            noteEl.innerHTML = `Add plants to see delivery charges`;
+        }
+    }
 
     // Update checkout summary too
     updateCheckoutSummary();
@@ -590,11 +640,16 @@ function updateCartUI() {
 // ==================== CHECKOUT ====================
 function updateCheckoutSummary() {
     const { cart } = appStore.getState();
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const hasReadyPlants = cart.some(item => item.categorySlug === 'ready-plants');
-    const deliveryFree = subtotal >= 999 || hasReadyPlants;
-    const delivery = deliveryFree ? 0 : (subtotal > 0 ? 49 : 0);
-    const total = subtotal + delivery;
+    const {
+        subtotal,
+        readyMinimumRemaining,
+        hasReadyPlants,
+        hasOnlySmallPlants,
+        canCheckout,
+        delivery,
+        deliveryFree,
+        total
+    } = getOrderRules(cart);
 
     const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
     set('checkoutSubtotal', '₹' + subtotal.toLocaleString('en-IN'));
@@ -620,6 +675,31 @@ function updateCheckoutSummary() {
                 <div style="font-weight:700;color:var(--color-luxury);white-space:nowrap;">₹${(item.price * item.qty).toLocaleString('en-IN')}</div>
             </div>
         `).join('');
+    }
+
+    const checkoutBtn = document.getElementById('checkoutPlaceOrderBtn');
+    const checkoutBulkMsg = document.getElementById('checkoutBulkMsg');
+    if (checkoutBtn) {
+        checkoutBtn.disabled = !canCheckout;
+        checkoutBtn.style.opacity = canCheckout ? '1' : '0.55';
+        checkoutBtn.style.cursor = canCheckout ? 'pointer' : 'not-allowed';
+    }
+    if (checkoutBulkMsg) {
+        checkoutBulkMsg.style.display = canCheckout ? 'none' : 'block';
+        checkoutBulkMsg.textContent = `Minimum order for Ready Plants is ₹50,000. Add ₹${readyMinimumRemaining.toLocaleString('en-IN')} more in Ready Plants to place this order.`;
+    }
+
+    const deliveryNote = document.getElementById('checkoutDeliveryNote');
+    if (deliveryNote) {
+        if (hasReadyPlants && !canCheckout) {
+            deliveryNote.innerHTML = `<strong>Ready Plants minimum:</strong> add ₹${readyMinimumRemaining.toLocaleString('en-IN')} more`;
+        } else if (deliveryFree) {
+            deliveryNote.innerHTML = `<strong>Free delivery</strong> for Ready Plants`;
+        } else if (hasOnlySmallPlants) {
+            deliveryNote.innerHTML = `<strong>₹${SMALL_PLANTS_DELIVERY} delivery</strong> for Small Plants`;
+        } else {
+            deliveryNote.innerHTML = `Delivery charges appear after adding plants`;
+        }
     }
 }
 
@@ -650,12 +730,18 @@ function placeOrder() {
     const { cart } = appStore.getState();
     if (!cart.length) { showToast('Your cart is empty!', 'error'); return; }
 
-    const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    const { total, delivery, canCheckout, readyMinimumRemaining, hasReadyPlants } = getOrderRules(cart);
+    if (!canCheckout) {
+        showToast(`Ready Plants need ₹50,000 minimum. Add ₹${readyMinimumRemaining.toLocaleString('en-IN')} more.`, 'error');
+        return;
+    }
     const orderItems = cart.map(item => `• ${item.name} (x${item.qty}) — ₹${(item.price * item.qty).toLocaleString('en-IN')}`).join('%0A');
-    const delivery = document.querySelector('input[name="delivery"]:checked')?.value || 'Home Delivery';
+    const deliveryMethod = document.querySelector('input[name="delivery"]:checked')?.value || 'Home Delivery';
     const payment = document.querySelector('.payment-option.active .payment-label')?.textContent || 'Cash on Delivery';
+    const deliveryLine = delivery === 0 ? 'Free' : `₹${delivery.toLocaleString('en-IN')}`;
+    const orderNote = hasReadyPlants ? 'Ready Plants order minimum met.' : 'Small Plants order with no minimum.';
 
-    const waMsg = `Hello Karnataka Farms!%0A%0A*New Order Request*%0A%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0AEmail: ${encodeURIComponent(email)}%0ADelivery: ${delivery}%0AAddress: ${encodeURIComponent(addr1 + ', ' + city + ', ' + state + ' - ' + pin)}%0APayment: ${payment}%0A%0AItems:%0A${orderItems}%0A%0ATotal: ₹${total.toLocaleString('en-IN')}%0A%0AThank you!`;
+    const waMsg = `Hello Karnataka Farms!%0A%0A*New Order Request*%0A%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0AEmail: ${encodeURIComponent(email)}%0ADelivery Method: ${deliveryMethod}%0ADelivery Charge: ${deliveryLine}%0AAddress: ${encodeURIComponent(addr1 + ', ' + city + ', ' + state + ' - ' + pin)}%0APayment: ${payment}%0A%0AItems:%0A${orderItems}%0A%0AOrder Note: ${orderNote}%0ATotal: ₹${total.toLocaleString('en-IN')}%0A%0AThank you!`;
 
     window.open(`https://wa.me/917760674510?text=${waMsg}`, '_blank');
 

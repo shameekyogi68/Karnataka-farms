@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kf-v3-mobile-fit';
+const CACHE_NAME = 'kf-v4-order-rules';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
