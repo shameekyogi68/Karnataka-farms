@@ -306,6 +306,25 @@
                 <h1 class="reveal reveal-delay-1">Shop Plants</h1>
                 <p class="reveal reveal-delay-2">Browse our full catalog of nursery-grown plants, carefully categorized for every space and skill level.</p>
             </div>
+
+            <!-- Mobile-only: Horizontal chip filters -->
+            <div class="mobile-filter-bar" id="mobileFilterBar">
+                <button class="mobile-chip active" onclick="mobileFilterProducts('all', this)">🌿 All Plants <span class="chip-count">92</span></button>
+                <button class="mobile-chip" onclick="mobileFilterProducts('ready-plants', this)">🌳 Ready Plants <span class="chip-count">78</span></button>
+                <button class="mobile-chip" onclick="mobileFilterProducts('small-plants', this)">🪴 Small Plants <span class="chip-count">14</span></button>
+            </div>
+
+            <!-- Mobile-only: Sort row -->
+            <div class="mobile-sort-row">
+                <label>Sort:</label>
+                <select onchange="sortProducts(this.value)">
+                    <option value="popularity">Popularity</option>
+                    <option value="price-low">Price: Low → High</option>
+                    <option value="price-high">Price: High → Low</option>
+                    <option value="newest">Newest First</option>
+                </select>
+            </div>
+
             <div class="shop-layout">
                 <aside class="sidebar reveal">
                     <div class="sidebar-block">

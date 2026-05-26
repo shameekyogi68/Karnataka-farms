@@ -247,6 +247,15 @@ function filterCategoryFromFooter(category) {
     }, 100);
 }
 
+function mobileFilterProducts(category, chipEl) {
+    // Update chip active state
+    document.querySelectorAll('.mobile-chip').forEach(c => c.classList.remove('active'));
+    if (chipEl) chipEl.classList.add('active');
+    // Sync desktop sidebar filter too
+    const sidebarFilter = document.querySelector(`[data-filter="${category}"]`);
+    filterProducts(category, sidebarFilter);
+}
+
 // ==================== PRODUCT DETAIL ====================
 let currentProduct = null;
 
